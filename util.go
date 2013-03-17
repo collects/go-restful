@@ -23,7 +23,7 @@
 //OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package gorest
+package restful
 
 import (
 	"bytes"
@@ -33,13 +33,13 @@ import (
 )
 
 //Marshals the data in interface i into a byte slice, using the Marhaller/Unmarshaller specified in mime.
-//The Marhaller/Unmarshaller must have been registered before using gorest.RegisterMarshaller
+//The Marhaller/Unmarshaller must have been registered before using restful.RegisterMarshaller
 func Marshal(i interface{}, mime string) ([]byte, error) {
 	return InterfaceToBytes(i, mime)
 }
 
 //Marshals the data in interface i into a byte slice, using the Marhaller/Unmarshaller specified in mime.
-//The Marhaller/Unmarshaller must have been registered before using gorest.RegisterMarshaller
+//The Marhaller/Unmarshaller must have been registered before using restful.RegisterMarshaller
 func InterfaceToBytes(i interface{}, mime string) ([]byte, error) {
 	v := reflect.ValueOf(i)
 	if v.Kind() == reflect.Ptr {
@@ -64,13 +64,13 @@ func InterfaceToBytes(i interface{}, mime string) ([]byte, error) {
 	case reflect.Float32, reflect.Float64:
 		return []byte(strconv.FormatFloat(v.Float(), 'g', -1, v.Type().Bits())), nil
 	default:
-		return nil, errors.New("Type " + v.Type().Name() + " is not handled by GoRest.")
+		return nil, errors.New("Type " + v.Type().Name() + " is not handled by Restful.")
 	}
 	return nil, nil
 }
 
 //Unmarshals the data in buf into interface i, using the Marhaller/Unmarshaller specified in mime.
-//The Marhaller/Unmarshaller must have been registered before using gorest.RegisterMarshaller
+//The Marhaller/Unmarshaller must have been registered before using restful.RegisterMarshaller
 func Unmarshal(buf *bytes.Buffer, i interface{}, mime string) error {
 	return BytesToInterface(buf, i, mime)
 }
@@ -118,7 +118,7 @@ func BytesToInterface(buf *bytes.Buffer, i interface{}, mime string) error {
 		}
 		reflect.ValueOf(i).Elem().SetFloat(n)
 	default:
-		return errors.New("Type " + v.Type().Name() + " is not handled by GoRest.")
+		return errors.New("Type " + v.Type().Name() + " is not handled by Restful.")
 	}
 	return nil
 

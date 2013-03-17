@@ -23,7 +23,7 @@
 //OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package gorest
+package restful
 
 import (
 	"log"
@@ -34,7 +34,7 @@ import (
 	"strings"
 )
 
-type GoRestService interface {
+type Service interface {
 	ResponseBuilder() *ResponseBuilder
 }
 
@@ -112,20 +112,20 @@ func init() {
 //
 //	package main
 //	import (
-// 	   "code.google.com/p/gorest"
+// 	   "github.com/duzy/go-restful"
 //	        "http"
 //	)
 //	func main() {
-//	    gorest.RegisterService(new(HelloService)) //Register our service
-//	    http.Handle("/",gorest.Handle())    
+//	    restful.RegisterService(new(HelloService)) //Register our service
+//	    http.Handle("/",restful.Handle())    
 // 	   http.ListenAndServe(":8787",nil)
 //	}
 //
 //	//Service Definition
 //	type HelloService struct {
-//	    gorest.RestService `root:"/tutorial/"`
-//	    helloWorld  gorest.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
-//	    sayHello    gorest.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
+//	    restful.RestService `root:"/tutorial/"`
+//	    helloWorld  restful.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
+//	    sayHello    restful.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
 //	}
 //	func(serv HelloService) HelloWorld() string{
 // 	   return "Hello World"
@@ -142,20 +142,20 @@ func RegisterService(h interface{}) {
 //
 //	package main
 //	import (
-//	    "code.google.com/p/gorest"
+//	    "github.com/duzy/go-restful"
 //	        "http"
 //	)
 //	func main() {
-//	    gorest.RegisterServiceOnPath("/rest/",new(HelloService)) //Register our service
-//	    http.Handle("/",gorest.Handle())    
+//	    restful.RegisterServiceOnPath("/rest/",new(HelloService)) //Register our service
+//	    http.Handle("/",restful.Handle())    
 //	    http.ListenAndServe(":8787",nil)
 //	}
 //
 //	//Service Definition
 //	type HelloService struct {
-//	    gorest.RestService `root:"/tutorial/"`
-//	    helloWorld  gorest.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
-//	    sayHello    gorest.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
+//	    restful.RestService `root:"/tutorial/"`
+//	    helloWorld  restful.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
+//	    sayHello    restful.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
 //	}
 //	func(serv HelloService) HelloWorld() string{
 //	    return "Hello World"
@@ -164,7 +164,7 @@ func RegisterService(h interface{}) {
 //	    return "Hello " + name
 //	}
 func RegisterServiceOnPath(root string, h interface{}) {
-	//We only initialise the handler management once we know gorest is being used to hanlde request as well, not just client.
+	//We only initialise the handler management once we know restful is being used to hanlde request as well, not just client.
 	if !handlerInitialised {
 		restManager = newManager()
 		handlerInitialised = true
@@ -282,7 +282,7 @@ func (man *manager) addEndPoint(ep endPointStruct) {
 	man.endpoints[ep.requestMethod+":"+ep.signiture] = ep
 }
 
-//Registeres the function to be used for handling all requests directed to gorest.
+//Registeres the function to be used for handling all requests directed to restful.
 func HandleFunc(w http.ResponseWriter, r *http.Request) {
 	log.Println("Serving URL : ", r.Method, r.URL.RequestURI())
 	defer func() {
@@ -297,7 +297,7 @@ func HandleFunc(w http.ResponseWriter, r *http.Request) {
 }
 
 //Runs the default "net/http" DefaultServeMux on the specified port. 
-//All requests are handled using gorest.HandleFunc()
+//All requests are handled using restful.HandleFunc()
 func ServeStandAlone(port int) {
 	http.HandleFunc("/", HandleFunc)
 	http.ListenAndServe(":"+strconv.Itoa(port), nil)

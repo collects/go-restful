@@ -24,7 +24,7 @@
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
-package gorest
+package restful
 
 
 var authorizers map[string]Authorizer

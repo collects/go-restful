@@ -23,7 +23,7 @@
 //OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package gorest
+package restful
 
 import (
 	"bytes"
@@ -38,7 +38,7 @@ import (
 var sharedClient *http.Client
 
 //Use this if you have a *http.Client instance that you specifically want to use. 
-//Otherwise just use NewRequestBuilder(), which uses the http.Client maintained by GoRest.
+//Otherwise just use NewRequestBuilder(), which uses the http.Client maintained by Restful.
 func NewRequestBuilderFromClient(client *http.Client, url string) (*RequestBuilder, error) {
 	req, err := http.NewRequest(GET, url, nil)
 	if err != nil {
@@ -48,7 +48,7 @@ func NewRequestBuilderFromClient(client *http.Client, url string) (*RequestBuild
 	return &rb, nil
 }
 
-//This creates a new RequestBuilder, backed by GoRest's internally managed http.Client.
+//This creates a new RequestBuilder, backed by Restful's internally managed http.Client.
 //Although http.Client is useable concurrently, an instance of RequestBuilder is not safe for this. 
 //Because of http.Client's persistent(cached TCP connections) and concurrent nature, 
 //this can be used safely multiple times from different go routines. 

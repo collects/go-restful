@@ -23,7 +23,7 @@
 //OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package gorest
+package restful
 
 import (
 	"bytes"
@@ -35,7 +35,7 @@ import (
 )
 
 const (
-	ERROR_INVALID_INTERFACE = "RegisterService(interface{}) takes a pointer to a struct that inherits from type RestService. Example usage: gorest.RegisterService(new(ServiceOne)) "
+	ERROR_INVALID_INTERFACE = "RegisterService(interface{}) takes a pointer to a struct that inherits from type RestService. Example usage: restful.RegisterService(new(ServiceOne)) "
 )
 
 //Bootstrap functions below
@@ -44,7 +44,7 @@ const (
 //Takes a value of a struct representing a service.
 func registerService(root string, h interface{}) {
 
-	if _, ok := h.(GoRestService); !ok {
+	if _, ok := h.(Service); !ok {
 		panic(ERROR_INVALID_INTERFACE)
 	}
 
@@ -407,7 +407,7 @@ Run:
 
 	//Just in case the whole civilization crashes and it falls thru to here. This shall never happen though... well tested
 	log.Panic("There was a problem with request handing. Probably a bug, please report.") //Add client data, and send support alert
-	return nil, restStatus{http.StatusInternalServerError, "GoRest: Internal server error."}
+	return nil, restStatus{http.StatusInternalServerError, "Restful: Internal server error."}
 }
 
 func makeArg(data string, template reflect.Type, mime string) (reflect.Value, restStatus) {

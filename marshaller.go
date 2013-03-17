@@ -23,7 +23,7 @@
 //OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package gorest
+package restful
 
 import "encoding/json"
 
@@ -35,7 +35,7 @@ type Marshaller struct {
 
 var marshallers map[string]*Marshaller
 
-//Register a Marshaller. These registered Marshallers are shared by the client or servers side usage of gorest.
+//Register a Marshaller. These registered Marshallers are shared by the client or servers side usage of restful.
 func RegisterMarshaller(mime string, m *Marshaller) {
 	if marshallers == nil {
 		marshallers = make(map[string]*Marshaller, 0)

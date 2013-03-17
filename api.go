@@ -23,7 +23,7 @@
 //OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 //ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-package gorest
+package restful
 
 import (
 	"net/http"
@@ -41,9 +41,9 @@ const (
 //
 //
 //	type HelloService struct {
-//	    gorest.RestService `root:"/tutorial/"`
-//	    helloWorld  gorest.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
-//	    sayHello    gorest.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
+//	    restful.RestService `root:"/tutorial/"`
+//	    helloWorld  restful.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
+//	    sayHello    restful.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
 //	}
 //
 type RestService struct {
@@ -51,13 +51,13 @@ type RestService struct {
 	rb      *ResponseBuilder
 }
 
-//Used to declare and EndPoint, wich represents a single point of entry to gorest applications, via a URL.
+//Used to declare and EndPoint, wich represents a single point of entry to restful applications, via a URL.
 //See code example below:
 //
 //	type HelloService struct {
-//	    gorest.RestService `root:"/tutorial/"`
-// 	   helloWorld  gorest.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
-// 	   sayHello    gorest.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
+//	    restful.RestService `root:"/tutorial/"`
+// 	   helloWorld  restful.EndPoint `method:"GET" path:"/hello-world/" output:"string"`
+// 	   sayHello    restful.EndPoint `method:"GET" path:"/hello/{name:string}" output:"string"`
 //	}
 //
 type EndPoint bool
